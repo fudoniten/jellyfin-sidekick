@@ -10,4 +10,5 @@ COPY . .
 
 EXPOSE 8080
 
+# Run without --config, will use environment variables
 CMD ["clojure", "-M:run"]

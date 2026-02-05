@@ -76,14 +76,26 @@ Environment variables:
 
 ### Running Locally
 
+With config file:
 ```bash
 clojure -M:run --config resources/config.edn --log-level debug
 ```
 
+With environment variables only (no config file needed):
+```bash
+export JELLYFIN_URL=http://localhost:8096
+export JELLYFIN_API_KEY=your-key
+export PORT=8080
+export LOG_LEVEL=debug
+clojure -M:run
+```
+
 Options:
-- `--config PATH` - Path to configuration EDN file (can be specified multiple times)
+- `--config PATH` - Path to configuration EDN file (can be specified multiple times, optional)
 - `--log-level LEVEL` - Set log level (trace, debug, info, warn, error)
 - `--help` - Show usage information
+
+If no config file is provided, the service reads configuration from environment variables.
 
 ### Docker
 

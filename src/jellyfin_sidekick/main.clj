@@ -60,7 +60,14 @@
           (System/exit 1))
 
       :else
-      (let [config-map    (cond-> (merge-configs (:config options))
+      (let [;; Only load config files if they were provided and exist
+            config-map    (cond-> (if (seq (:config options))
+                                   (merge-configs (:config options))
+                                   ;; No config files - create minimal config from env vars
+                                   {:log-level (keyword (or (System/getenv "LOG_LEVEL") "info"))
+                                    :server {:port (Integer/parseInt (or (System/getenv "PORT") "8080"))}
+                                    :jellyfin {:base-url (or (System/getenv "JELLYFIN_URL") "http://localhost:8096")
+                                              :api-key (System/getenv "JELLYFIN_API_KEY")}})
                             (:log-level options) (assoc :log-level (:log-level options)))
             system-config (config/config->system config-map)
             system        (system/start system-config)]
