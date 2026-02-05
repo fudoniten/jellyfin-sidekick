@@ -15,4 +15,6 @@
 
  :aliases {:run {:main-opts ["-m" "jellyfin-sidekick.main"]}
            :test {:extra-paths ["test"]
-                  :extra-deps {org.clojure/test.check {:mvn/version "1.1.1"}}}}}
+                  :extra-deps {eftest/eftest {:mvn/version "0.6.0"}
+                               ring/ring-mock {:mvn/version "0.4.0"}}
+                  :main-opts ["-e" "(require '[eftest.runner :refer [find-tests run-tests]]) (run-tests (find-tests \"test\"))"]}}}
