@@ -1,0 +1,4 @@
+{:log-level #or [#env LOG_LEVEL :info]
+ :server {:port #or [#env PORT 8080]}
+ :jellyfin {:base-url #or [#env JELLYFIN_URL "http://localhost:8096"]
+            :api-key #env JELLYFIN_API_KEY}}

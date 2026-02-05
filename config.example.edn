@@ -1,0 +1,4 @@
+{:log-level :info
+ :server {:port 8080}
+ :jellyfin {:base-url "http://jellyfin.kube.sea.fudo.link"
+            :api-key "your-jellyfin-api-key-here"}}
