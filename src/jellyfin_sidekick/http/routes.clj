@@ -9,12 +9,12 @@
             [clojure.java.io :as io]))
 
 (defn- ok [body]
-  (-> (response body)
+  (-> (response (json/generate-string body))
       (status 200)
       (content-type "application/json")))
 
 (defn- json-response [body status-code]
-  (-> (response body)
+  (-> (response (json/generate-string body))
       (status status-code)
       (content-type "application/json")))
 
