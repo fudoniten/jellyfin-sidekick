@@ -1,7 +1,6 @@
 (ns jellyfin-sidekick.http.server
   "HTTP server using Ring and Reitit"
-  (:require [reitit.ring :as ring]
-            [ring.adapter.jetty :as jetty]
+  (:require [ring.adapter.jetty :as jetty]
             [jellyfin-sidekick.http.routes :as routes]
             [taoensso.timbre :as log]))
 

@@ -10,8 +10,7 @@
    For movies: /path/to/Movie (2010)/Movie (2010).nfo
    For episodes: /path/to/Show/Season 01/S01E01.nfo"
   [item]
-  (let [media-path (:Path item)
-        item-type (:Type item)]
+  (let [media-path (:Path item)]
     (when media-path
       (let [dir (-> (io/file media-path) .getParent)
             filename (-> (io/file media-path) .getName)

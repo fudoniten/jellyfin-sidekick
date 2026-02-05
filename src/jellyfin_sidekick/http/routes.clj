@@ -5,7 +5,8 @@
             [cheshire.core :as json]
             [taoensso.timbre :as log]
             [jellyfin-sidekick.jellyfin.api :as jellyfin]
-            [jellyfin-sidekick.jellyfin.nfo :as nfo]))
+            [jellyfin-sidekick.jellyfin.nfo :as nfo]
+            [clojure.java.io :as io]))
 
 (defn- ok [body]
   (-> (response body)
@@ -20,7 +21,7 @@
 (defn- parse-json-body [request]
   (try
     (when-let [body (:body request)]
-      (json/parse-stream (clojure.java.io/reader body) true))
+      (json/parse-stream (io/reader body) true))
     (catch Exception e
       (log/error e "Failed to parse JSON body")
       nil)))
@@ -39,20 +40,19 @@
         ;; 2. Write NFO file with tags
         (let [nfo-result (nfo/write-tags-to-nfo! item tags)]
           (if (:success nfo-result)
-            (do
-              ;; 3. Trigger Jellyfin refresh
-              (let [refresh-result (jellyfin/refresh-item! jellyfin-client item-id)]
-                (if (:success refresh-result)
-                  (ok {:success true
-                       :itemId item-id
-                       :nfoPath (:nfo-path nfo-result)
-                       :refreshed true})
-                  (json-response {:success false
-                                 :itemId item-id
-                                 :nfoPath (:nfo-path nfo-result)
-                                 :refreshed false
-                                 :error (:error refresh-result)}
-                                500))))
+            ;; 3. Trigger Jellyfin refresh
+            (let [refresh-result (jellyfin/refresh-item! jellyfin-client item-id)]
+              (if (:success refresh-result)
+                (ok {:success true
+                     :itemId item-id
+                     :nfoPath (:nfo-path nfo-result)
+                     :refreshed true})
+                (json-response {:success false
+                                :itemId item-id
+                                :nfoPath (:nfo-path nfo-result)
+                                :refreshed false
+                                :error (:error refresh-result)}
+                               500)))
             (json-response {:success false
                            :itemId item-id
                            :error (:error nfo-result)}

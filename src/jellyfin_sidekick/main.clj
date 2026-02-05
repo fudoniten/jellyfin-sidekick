@@ -10,9 +10,8 @@
 (def cli-options
   [["-c" "--config PATH" "Path to configuration EDN file"
     :multi true
-    :default []
+    :default ["resources/config.edn"]
     :update-fn (fnil conj [])
-    :missing "at least one config file is required."
     :validate [#(.exists (io/file %)) "config file not found"]]
    ["-l" "--log-level LEVEL" "Log level (trace, debug, info, warn, error)"
     :default nil

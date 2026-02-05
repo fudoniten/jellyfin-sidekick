@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["clojure", "-M:run", "--config", "resources/config.edn"]
+CMD ["clojure", "-M:run"]
