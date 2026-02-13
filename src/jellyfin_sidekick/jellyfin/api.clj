@@ -46,7 +46,8 @@
   [client item-id]
   (let [guid (format-guid item-id)
         response (authenticated-request client :get "Items"
-                                       :query-params {:Ids guid})]
+                                       :query-params {:Ids guid
+                                                     :Fields "Path"})]
     (if (= 200 (:status response))
       (when-let [result (json/parse-string (:body response) true)]
         (first (:Items result)))
