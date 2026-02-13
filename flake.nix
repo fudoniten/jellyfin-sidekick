@@ -35,6 +35,7 @@
               let jellyfinSidekick = self.packages."${system}".jellyfinSidekick;
               in [ "${jellyfinSidekick}/bin/jellyfin-sidekick" ];
             verbose = true;
+            pathEnv = with pkgs; [ curl nettools inetutils nmap ];
           };
         };
 
